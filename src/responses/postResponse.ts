@@ -5,7 +5,10 @@ import { readBodyResponse } from './readBodyResponse.js';
 import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { StatusCode } from '../types/enum.js';
 import { dataBase } from '../model/model.app.js';
-import { MiddlewareResponse } from '../middlewayer/middlewareResponse.js';
+import { MiddlewareResponse } from '../middleware/middlewareResponse.js';
+import { CustomError } from '../errors/customError.js';
+import { catchController } from '../errors/catchController.js';
+import { INVALID_DATA } from '../errors/constants.js';
 
 export const postResponse = async (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
   try {
@@ -15,10 +18,9 @@ export const postResponse = async (req: IncomingMessage, res: ServerResponse<Inc
       const { userId, updateUser } = setIdUserObject(userObject as User);
       dataBase.setData(updateUser, userId);
       MiddlewareResponse(res, StatusCode.CREATE, updateUser);
-    } else {
-      MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'Invalid data in request' });
     }
+    throw new CustomError(INVALID_DATA, StatusCode.BAD_REQUEST);
   } catch (err) {
-    MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Invalid data in request' });
+    catchController(err, res);
   }
 };

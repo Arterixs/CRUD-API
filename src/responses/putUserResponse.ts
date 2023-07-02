@@ -5,7 +5,10 @@ import { ServerUser } from '../types/interface.js';
 import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { readBodyResponse } from './readBodyResponse.js';
 import { isValidUserId } from '../helpers/isValidUserId.js';
-import { MiddlewareResponse } from '../middlewayer/middlewareResponse.js';
+import { MiddlewareResponse } from '../middleware/middlewareResponse.js';
+import { CustomError } from '../errors/customError.js';
+import { catchController } from '../errors/catchController.js';
+import { INVALID_DATA, USER_ID_NOT_VALID, USER_NOT_EXIST } from '../errors/constants.js';
 
 export const putUserResponse = async (clientId: string, res: ServerResponse<IncomingMessage>, req: IncomingMessage) => {
   try {
@@ -17,16 +20,13 @@ export const putUserResponse = async (clientId: string, res: ServerResponse<Inco
         if (isValid) {
           dataBase.updateData(userObject as ServerUser, clientId);
           MiddlewareResponse(res, StatusCode.SUCCES, userObject);
-        } else {
-          MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'Invalid data in request' });
         }
-      } else {
-        MiddlewareResponse(res, StatusCode.NOT_FOUND, { message: 'User is not exsist' });
+        throw new CustomError(INVALID_DATA, StatusCode.BAD_REQUEST);
       }
-    } else {
-      MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'UserId is not valid' });
+      throw new CustomError(USER_NOT_EXIST, StatusCode.NOT_FOUND);
     }
+    throw new CustomError(USER_ID_NOT_VALID, StatusCode.BAD_REQUEST);
   } catch (err) {
-    MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Invalid data in request' });
+    catchController(err, res);
   }
 };

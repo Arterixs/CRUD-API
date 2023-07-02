@@ -7,7 +7,8 @@ import { putUserResponse } from './responses/putUserResponse.js';
 import { deleteUserResponse } from './responses/deleteUserResponse.js';
 import { postResponse } from './responses/postResponse.js';
 import { isValidUrlPath } from './helpers/isValidUrlPath.js';
-import { MiddlewareResponse } from './middlewayer/middlewareResponse.js';
+import { MiddlewareResponse } from './middleware/middlewareResponse.js';
+import { INVALID_URL, SERVER_ERROR } from './errors/constants.js';
 
 const { PORT } = process.env;
 
@@ -25,7 +26,7 @@ export const server = createServer((req, res) => {
           break;
         case Method.PUT:
           putUserResponse(clientId, res, req).catch(() =>
-            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Server error' })
+            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: SERVER_ERROR })
           );
           break;
         case Method.DELETE:
@@ -41,7 +42,7 @@ export const server = createServer((req, res) => {
           break;
         case Method.POST:
           postResponse(req, res).catch(() =>
-            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Server error' })
+            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: SERVER_ERROR })
           );
           break;
         default:
@@ -49,7 +50,7 @@ export const server = createServer((req, res) => {
       }
     }
   } catch (err) {
-    MiddlewareResponse(res, StatusCode.NOT_FOUND, { message: 'Url is not found' });
+    MiddlewareResponse(res, StatusCode.NOT_FOUND, { message: INVALID_URL });
   }
 });
 
