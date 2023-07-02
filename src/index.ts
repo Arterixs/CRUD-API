@@ -6,14 +6,17 @@ import { getUserResponse } from './responses/getUserResponse.ts';
 import { putUserResponse } from './responses/putUserResponse.ts';
 import { deleteUserResponse } from './responses/deleteUserResponse.ts';
 import { postResponse } from './responses/postResponse.ts';
+import { isValidUrlPath } from './helpers/isValidUrlPath.ts';
 
 const { PORT } = process.env;
 
 const server = createServer((req, res) => {
-  const clientUrl = req.url;
-  const clientMethod = req.method;
-  if (clientUrl && clientMethod) {
-    const clientId = clientUrl.split('/')[3];
+  try {
+    const clientUrl = req.url;
+    const clientMethod = req.method;
+    const urlPaths = clientUrl?.split('/');
+    isValidUrlPath(clientUrl, clientMethod, urlPaths);
+    const clientId = urlPaths?.at(3);
     if (clientId) {
       switch (clientMethod) {
         case Method.GET:
@@ -31,7 +34,7 @@ const server = createServer((req, res) => {
           deleteUserResponse(res, clientId);
           break;
         default:
-          break;
+          throw new Error();
       }
     } else {
       switch (clientMethod) {
@@ -47,9 +50,14 @@ const server = createServer((req, res) => {
           });
           break;
         default:
-          break;
+          throw new Error();
       }
     }
+  } catch (err) {
+    res.writeHead(StatusCode.NOT_FOUND, {
+      'Content-type': 'application/json',
+    });
+    res.end(JSON.stringify({ message: 'Url is not found' }));
   }
 });
 
