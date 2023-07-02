@@ -16,7 +16,7 @@ export const postResponse = async (req: IncomingMessage, res: ServerResponse<Inc
       res.writeHead(StatusCode.CREATE, {
         'Content-type': 'application/json',
       });
-      res.end(JSON.stringify(userObject));
+      res.end(JSON.stringify(updateUser));
     } else {
       res.writeHead(StatusCode.BAD_REQUEST, {
         'Content-type': 'application/json',
