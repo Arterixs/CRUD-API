@@ -5,6 +5,7 @@ import { readBodyResponse } from './readBodyResponse.js';
 import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { StatusCode } from '../types/enum.js';
 import { dataBase } from '../model/model.app.js';
+import { MiddlewareResponse } from '../middlewayer/middlewareResponse.js';
 
 export const postResponse = async (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
   try {
@@ -13,20 +14,11 @@ export const postResponse = async (req: IncomingMessage, res: ServerResponse<Inc
     if (isValid) {
       const { userId, updateUser } = setIdUserObject(userObject as User);
       dataBase.setData(updateUser, userId);
-      res.writeHead(StatusCode.CREATE, {
-        'Content-type': 'application/json',
-      });
-      res.end(JSON.stringify(updateUser));
+      MiddlewareResponse(res, StatusCode.CREATE, updateUser);
     } else {
-      res.writeHead(StatusCode.BAD_REQUEST, {
-        'Content-type': 'application/json',
-      });
-      res.end(JSON.stringify({ message: 'Invalid data in request' }));
+      MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'Invalid data in request' });
     }
   } catch (err) {
-    res.writeHead(StatusCode.SERVER_ERROR, {
-      'Content-type': 'application/json',
-    });
-    res.end(JSON.stringify({ message: 'Invalid data in request' }));
+    MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Invalid data in request' });
   }
 };

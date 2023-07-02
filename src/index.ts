@@ -7,6 +7,7 @@ import { putUserResponse } from './responses/putUserResponse.js';
 import { deleteUserResponse } from './responses/deleteUserResponse.js';
 import { postResponse } from './responses/postResponse.js';
 import { isValidUrlPath } from './helpers/isValidUrlPath.js';
+import { MiddlewareResponse } from './middlewayer/middlewareResponse.js';
 
 const { PORT } = process.env;
 
@@ -23,12 +24,9 @@ export const server = createServer((req, res) => {
           getUserResponse(res, clientId);
           break;
         case Method.PUT:
-          putUserResponse(clientId, res, req).catch(() => {
-            res.writeHead(StatusCode.SERVER_ERROR, {
-              'Content-type': 'application/json',
-            });
-            res.end(JSON.stringify({ message: 'Server error' }));
-          });
+          putUserResponse(clientId, res, req).catch(() =>
+            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Server error' })
+          );
           break;
         case Method.DELETE:
           deleteUserResponse(res, clientId);
@@ -42,22 +40,16 @@ export const server = createServer((req, res) => {
           getResponse(res);
           break;
         case Method.POST:
-          postResponse(req, res).catch(() => {
-            res.writeHead(StatusCode.SERVER_ERROR, {
-              'Content-type': 'application/json',
-            });
-            res.end(JSON.stringify({ message: 'Server error' }));
-          });
+          postResponse(req, res).catch(() =>
+            MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Server error' })
+          );
           break;
         default:
           throw new Error();
       }
     }
   } catch (err) {
-    res.writeHead(StatusCode.NOT_FOUND, {
-      'Content-type': 'application/json',
-    });
-    res.end(JSON.stringify({ message: 'Url is not found' }));
+    MiddlewareResponse(res, StatusCode.NOT_FOUND, { message: 'Url is not found' });
   }
 });
 

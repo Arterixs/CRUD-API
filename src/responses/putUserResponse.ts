@@ -5,6 +5,7 @@ import { ServerUser } from '../types/interface.js';
 import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { readBodyResponse } from './readBodyResponse.js';
 import { isValidUserId } from '../helpers/isValidUserId.js';
+import { MiddlewareResponse } from '../middlewayer/middlewareResponse.js';
 
 export const putUserResponse = async (clientId: string, res: ServerResponse<IncomingMessage>, req: IncomingMessage) => {
   try {
@@ -15,44 +16,17 @@ export const putUserResponse = async (clientId: string, res: ServerResponse<Inco
         const isValid = isValidUserObject(userObject);
         if (isValid) {
           dataBase.updateData(userObject as ServerUser, clientId);
-          res.writeHead(StatusCode.SUCCES, {
-            'Content-type': 'application/json',
-          });
-          res.end(JSON.stringify(userObject));
+          MiddlewareResponse(res, StatusCode.SUCCES, userObject);
         } else {
-          res.writeHead(StatusCode.BAD_REQUEST, {
-            'Content-type': 'application/json',
-          });
-          res.end(JSON.stringify({ message: 'Invalid data in request' }));
+          MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'Invalid data in request' });
         }
       } else {
-        res.writeHead(StatusCode.NOT_FOUND, {
-          'Content-type': 'application/json',
-        });
-        res.end(JSON.stringify({ message: 'User is not exsist' }));
+        MiddlewareResponse(res, StatusCode.NOT_FOUND, { message: 'User is not exsist' });
       }
     } else {
-      res.writeHead(StatusCode.BAD_REQUEST, {
-        'Content-type': 'application/json',
-      });
-      res.end(JSON.stringify({ message: 'UserId is not valid' }));
+      MiddlewareResponse(res, StatusCode.BAD_REQUEST, { message: 'UserId is not valid' });
     }
   } catch (err) {
-    res.writeHead(StatusCode.SERVER_ERROR, {
-      'Content-type': 'application/json',
-    });
-    res.end(JSON.stringify({ message: 'Invalid data in request' }));
+    MiddlewareResponse(res, StatusCode.SERVER_ERROR, { message: 'Invalid data in request' });
   }
-  // if (dataBase.checkData(clientId)) {
-  //   dataBase.setData(post, Number(clientId));
-  //   res.writeHead(StatusCode.SUCCES, {
-  //     'Content-type': 'application/json',
-  //   });
-  //   res.end(JSON.stringify(post));
-  // } else {
-  //   res.writeHead(StatusCode.NOT_FOUND, {
-  //     'Content-type': 'application/json',
-  //   });
-  //   res.end(JSON.stringify({ message: 'User is not found' }));
-  // }
 };
