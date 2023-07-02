@@ -11,6 +11,12 @@ class Model {
     this.dataBase.set(id, data);
   }
 
+  public updateData(data: ServerUser, id: string) {
+    const updateData = data;
+    updateData.id = id;
+    this.dataBase.set(id, data);
+  }
+
   public getData(id: string) {
     return this.dataBase.get(id);
   }

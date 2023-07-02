@@ -10,7 +10,7 @@ import { isValidUrlPath } from './helpers/isValidUrlPath.js';
 
 const { PORT } = process.env;
 
-const server = createServer((req, res) => {
+export const server = createServer((req, res) => {
   try {
     const clientUrl = req.url;
     const clientMethod = req.method;

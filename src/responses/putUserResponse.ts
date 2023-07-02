@@ -14,7 +14,7 @@ export const putUserResponse = async (clientId: string, res: ServerResponse<Inco
         const userObject = await readBodyResponse(req);
         const isValid = isValidUserObject(userObject);
         if (isValid) {
-          dataBase.setData(userObject as ServerUser, clientId);
+          dataBase.updateData(userObject as ServerUser, clientId);
           res.writeHead(StatusCode.SUCCES, {
             'Content-type': 'application/json',
           });

@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
   extends: [
     'airbnb-base',
@@ -19,6 +20,7 @@ module.exports = {
       ],
       env: {
         node: true,
+        jest: true,
       },
       parserOptions: {
         sourceType: 'script',
@@ -34,7 +36,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  plugins: ['@typescript-eslint', 'import', 'prettier'],
+  plugins: ['@typescript-eslint', 'import', 'prettier', 'jest'],
   rules: {
     'import/extensions': [1, { ts: 'always' }],
     'import/prefer-default-export': 'off',
