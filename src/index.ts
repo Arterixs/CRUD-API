@@ -2,24 +2,23 @@ import 'dotenv/config';
 import { createServer, ServerResponse, IncomingMessage } from 'node:http';
 import { Method, StatusCode } from './types/enum.ts';
 import { User } from './types/interface.ts';
+import { dataBase } from './model/model.app.ts';
 
 const { PORT } = process.env;
 
 let num = 0;
 
-const baseData: Map<number, User> = new Map();
-
 const getSimple = (res: ServerResponse<IncomingMessage>) => {
   res.writeHead(StatusCode.SUCCES, {
     'Content-type': 'application/json',
   });
-  const convert = Array.from(baseData.values());
+  const convert = Array.from(dataBase.readData().values());
   res.end(JSON.stringify(convert));
 };
 
 const hardGet = (res: ServerResponse<IncomingMessage>, clientId: string) => {
-  if (baseData.has(Number(clientId))) {
-    const obj = baseData.get(Number(clientId));
+  if (dataBase.checkData(Number(clientId))) {
+    const obj = dataBase.getData(Number(clientId));
     res.writeHead(StatusCode.SUCCES, {
       'Content-type': 'application/json',
     });
@@ -45,8 +44,8 @@ const postSimple = (req: IncomingMessage): Promise<User> =>
   });
 
 const hardPut = (post: User, clientId: string, res: ServerResponse<IncomingMessage>) => {
-  if (baseData.has(Number(clientId))) {
-    baseData.set(Number(clientId), post);
+  if (dataBase.checkData(Number(clientId))) {
+    dataBase.setData(post, Number(clientId));
     res.writeHead(StatusCode.SUCCES, {
       'Content-type': 'application/json',
     });
@@ -60,8 +59,8 @@ const hardPut = (post: User, clientId: string, res: ServerResponse<IncomingMessa
 };
 
 const hardDelete = (res: ServerResponse<IncomingMessage>, clientId: string) => {
-  if (baseData.has(Number(clientId))) {
-    baseData.delete(Number(clientId));
+  if (dataBase.checkData(Number(clientId))) {
+    dataBase.deleteData(Number(clientId));
     res.writeHead(StatusCode.DELETE, {
       'Content-type': 'application/json',
     });
@@ -102,7 +101,7 @@ const server = createServer((req, res) => {
         case Method.POST:
           postSimple(req)
             .then((post) => {
-              baseData.set(num, post);
+              dataBase.setData(post, num);
               num += 1;
               res.writeHead(StatusCode.CREATE, {
                 'Content-type': 'application/json',
