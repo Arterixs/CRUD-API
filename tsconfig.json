@@ -25,5 +25,5 @@
     "esm": true
   },
   "include": ["src", "config", ".eslintrc.cjs", "./*.ts", "jest.config.cjs"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/index.test.ts"]
 }
