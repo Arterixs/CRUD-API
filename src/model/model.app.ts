@@ -1,4 +1,4 @@
-import { ServerUser } from '../types/interface.ts';
+import { ServerUser } from '../types/interface.js';
 
 class Model {
   private dataBase: Map<string, ServerUser>;

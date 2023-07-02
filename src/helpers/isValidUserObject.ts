@@ -1,5 +1,5 @@
-import { User } from '../types/interface.ts';
-import { isValidItemsHobbies } from './isValidItemHobbies.ts';
+import { User } from '../types/interface.js';
+import { isValidItemsHobbies } from './isValidItemHobbies.js';
 
 export const isValidUserObject = (user: unknown) => {
   if (typeof user === 'object' && user !== null && typeof user !== 'function' && !Array.isArray(user)) {

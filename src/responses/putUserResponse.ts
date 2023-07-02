@@ -1,10 +1,10 @@
 import { ServerResponse, IncomingMessage } from 'node:http';
-import { dataBase } from '../model/model.app.ts';
-import { StatusCode } from '../types/enum.ts';
-import { ServerUser } from '../types/interface.ts';
-import { isValidUserObject } from '../helpers/isValidUserObject.ts';
-import { readBodyResponse } from './readBodyResponse.ts';
-import { isValidUserId } from '../helpers/isValidUserId.ts';
+import { dataBase } from '../model/model.app.js';
+import { StatusCode } from '../types/enum.js';
+import { ServerUser } from '../types/interface.js';
+import { isValidUserObject } from '../helpers/isValidUserObject.js';
+import { readBodyResponse } from './readBodyResponse.js';
+import { isValidUserId } from '../helpers/isValidUserId.js';
 
 export const putUserResponse = async (clientId: string, res: ServerResponse<IncomingMessage>, req: IncomingMessage) => {
   try {

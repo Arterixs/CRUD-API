@@ -1,10 +1,10 @@
 import { ServerResponse, IncomingMessage } from 'node:http';
-import { User } from '../types/interface.ts';
-import { setIdUserObject } from '../helpers/setIdUserObject.ts';
-import { readBodyResponse } from './readBodyResponse.ts';
-import { isValidUserObject } from '../helpers/isValidUserObject.ts';
-import { StatusCode } from '../types/enum.ts';
-import { dataBase } from '../model/model.app.ts';
+import { User } from '../types/interface.js';
+import { setIdUserObject } from '../helpers/setIdUserObject.js';
+import { readBodyResponse } from './readBodyResponse.js';
+import { isValidUserObject } from '../helpers/isValidUserObject.js';
+import { StatusCode } from '../types/enum.js';
+import { dataBase } from '../model/model.app.js';
 
 export const postResponse = async (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
   try {

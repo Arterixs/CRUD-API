@@ -1,4 +1,4 @@
-import { isValidUrl } from './isValidUrl.ts';
+import { isValidUrl } from './isValidUrl.js';
 
 export const isValidUrlPath = (
   clientUrl: string | undefined,

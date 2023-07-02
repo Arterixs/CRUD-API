@@ -1,12 +1,12 @@
 import 'dotenv/config';
 import { createServer } from 'node:http';
-import { Method, StatusCode } from './types/enum.ts';
-import { getResponse } from './responses/getResponse.ts';
-import { getUserResponse } from './responses/getUserResponse.ts';
-import { putUserResponse } from './responses/putUserResponse.ts';
-import { deleteUserResponse } from './responses/deleteUserResponse.ts';
-import { postResponse } from './responses/postResponse.ts';
-import { isValidUrlPath } from './helpers/isValidUrlPath.ts';
+import { Method, StatusCode } from './types/enum.js';
+import { getResponse } from './responses/getResponse.js';
+import { getUserResponse } from './responses/getUserResponse.js';
+import { putUserResponse } from './responses/putUserResponse.js';
+import { deleteUserResponse } from './responses/deleteUserResponse.js';
+import { postResponse } from './responses/postResponse.js';
+import { isValidUrlPath } from './helpers/isValidUrlPath.js';
 
 const { PORT } = process.env;
 

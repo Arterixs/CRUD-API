@@ -1,7 +1,7 @@
 import { ServerResponse, IncomingMessage } from 'node:http';
-import { dataBase } from '../model/model.app.ts';
-import { StatusCode } from '../types/enum.ts';
-import { isValidUserId } from '../helpers/isValidUserId.ts';
+import { dataBase } from '../model/model.app.js';
+import { StatusCode } from '../types/enum.js';
+import { isValidUserId } from '../helpers/isValidUserId.js';
 
 export const getUserResponse = (res: ServerResponse<IncomingMessage>, clientId: string) => {
   const checkId = isValidUserId(clientId);

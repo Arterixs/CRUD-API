@@ -39,5 +39,6 @@ module.exports = {
     'import/extensions': [1, { ts: 'always' }],
     'import/prefer-default-export': 'off',
     'no-console': ['warn'],
+    'import/no-unresolved': 'off',
   },
 };
