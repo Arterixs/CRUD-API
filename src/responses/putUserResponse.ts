@@ -6,9 +6,7 @@ import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { readBodyResponse } from './readBodyResponse.js';
 import { isValidUserId } from '../helpers/isValidUserId.js';
 import { MiddlewareResponse } from '../middleware/middlewareResponse.js';
-import { CustomError } from '../errors/customError.js';
-import { catchController } from '../errors/catchController.js';
-import { INVALID_DATA, USER_ID_NOT_VALID, USER_NOT_EXIST } from '../errors/constants.js';
+import { CustomError, catchController, INVALID_DATA, USER_ID_NOT_VALID, USER_NOT_EXIST } from '../errors/index.js';
 
 export const putUserResponse = async (clientId: string, res: ServerResponse<IncomingMessage>, req: IncomingMessage) => {
   try {

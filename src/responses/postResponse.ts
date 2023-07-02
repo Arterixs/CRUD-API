@@ -6,9 +6,7 @@ import { isValidUserObject } from '../helpers/isValidUserObject.js';
 import { StatusCode } from '../types/enum.js';
 import { dataBase } from '../model/model.app.js';
 import { MiddlewareResponse } from '../middleware/middlewareResponse.js';
-import { CustomError } from '../errors/customError.js';
-import { catchController } from '../errors/catchController.js';
-import { INVALID_DATA } from '../errors/constants.js';
+import { CustomError, catchController, INVALID_DATA } from '../errors/index.js';
 
 export const postResponse = async (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
   try {

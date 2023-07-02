@@ -3,9 +3,7 @@ import { dataBase } from '../model/model.app.js';
 import { StatusCode } from '../types/enum.js';
 import { isValidUserId } from '../helpers/isValidUserId.js';
 import { MiddlewareResponse } from '../middleware/middlewareResponse.js';
-import { CustomError } from '../errors/customError.js';
-import { catchController } from '../errors/catchController.js';
-import { USER_ID_NOT_VALID, USER_NOT_EXIST } from '../errors/constants.js';
+import { CustomError, catchController, USER_ID_NOT_VALID, USER_NOT_EXIST } from '../errors/index.js';
 
 export const deleteUserResponse = (res: ServerResponse<IncomingMessage>, clientId: string) => {
   try {

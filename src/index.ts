@@ -1,14 +1,10 @@
 import 'dotenv/config';
 import { createServer } from 'node:http';
 import { Method, StatusCode } from './types/enum.js';
-import { getResponse } from './responses/getResponse.js';
-import { getUserResponse } from './responses/getUserResponse.js';
-import { putUserResponse } from './responses/putUserResponse.js';
-import { deleteUserResponse } from './responses/deleteUserResponse.js';
-import { postResponse } from './responses/postResponse.js';
+import { deleteUserResponse, getResponse, getUserResponse, postResponse, putUserResponse } from './responses/index.js';
 import { isValidUrlPath } from './helpers/isValidUrlPath.js';
 import { MiddlewareResponse } from './middleware/middlewareResponse.js';
-import { INVALID_URL, SERVER_ERROR } from './errors/constants.js';
+import { INVALID_URL, SERVER_ERROR } from './errors/index.js';
 
 const { PORT } = process.env;
 
