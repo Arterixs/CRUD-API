@@ -1,14 +1,17 @@
 import { IncomingMessage } from 'node:http';
-import { User } from '../types/interface.ts';
 
-export const readBodyResponse = (req: IncomingMessage): Promise<User> =>
-  new Promise((resolve) => {
+export const readBodyResponse = (req: IncomingMessage): Promise<unknown> =>
+  new Promise((resolve, reject) => {
     const arrData: Buffer[] = [];
     req.on('data', (chunk: Buffer) => {
       arrData.push(chunk);
     });
     req.on('end', () => {
-      const correctArrData = JSON.parse(Buffer.concat(arrData).toString()) as User;
-      resolve(correctArrData);
+      try {
+        const userObject = JSON.parse(Buffer.concat(arrData).toString()) as unknown;
+        resolve(userObject);
+      } catch (err) {
+        reject();
+      }
     });
   });
