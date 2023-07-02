@@ -71,28 +71,28 @@ This is an example of how you may give instructions on setting up your project l
 
 - The application has two modes of operation (**development** and **production**):
 
-* Development - `npm run start:dev`
-* Production - `npm run start:prod`
+  - - Development - `npm run start:dev`
+  - - Production - `npm run start:prod`
 
 - To run tests, use the command ` npm run test`
 - Implemented endpoint `api/users`
 - Implemented the following query methods:
 
-* **GET** - `api/users` is used to get all persons
-* **GET** - `api/users/{userId}` is used to get person
-* **POST** - `api/users` is used to create record about new user and store it in database
-* **PUT** - `api/users/{userId}` is used to update existing user
-* **DELETE** - `api/users/{userId}` is used to delete existing user from database
+  - - **GET** - `api/users` is used to get all persons
+  - - **GET** - `api/users/{userId}` is used to get person
+  - - **POST** - `api/users` is used to create record about new user and store it in database
+  - - **PUT** - `api/users/{userId}` is used to update existing user
+  - - **DELETE** - `api/users/{userId}` is used to delete existing user from database
 
 - The body of the **POST** or **PUT** request is an JSON object with the following properties:
 
-* **username** — users name (string, **required**)
-* **age** — users age (number, **required**)
-* **hobbies** — users hobbies (array of strings or empty array, **required**)
+  - - **username** — users name (string, **required**)
+  - - **age** — users age (number, **required**)
+  - - **hobbies** — users hobbies (array of strings or empty array, **required**)
 
 - The response of the **POST** or **PUT** request is an JSON object with the following properties:
-  - **username** — users name (string)
 
-* **age** — users age (number)
-* **hobbies** — users hobbies (array of strings or empty array)
-* **id** - unique identifier generated on server side (string)
+  - **username** — users name (string)
+  - **age** — users age (number)
+  - **hobbies** — users hobbies (array of strings or empty array)
+  - **id** - unique identifier generated on server side (string)
