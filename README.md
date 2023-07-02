@@ -60,9 +60,9 @@ This is an example of how you may give instructions on setting up your project l
    ```
 2. Install dependencies
 
-```sh
- npm install
-```
+   ```sh
+   npm install
+   ```
 
 3. You can use **Postman** to test the application.
 4. Enjoy coding!
