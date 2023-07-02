@@ -1,25 +1,25 @@
-import { User } from '../types/interface.ts';
+import { ServerUser } from '../types/interface.ts';
 
 class Model {
-  private dataBase: Map<number, User>;
+  private dataBase: Map<string, ServerUser>;
 
   constructor() {
     this.dataBase = new Map();
   }
 
-  public setData(data: User, id: number) {
+  public setData(data: ServerUser, id: string) {
     this.dataBase.set(id, data);
   }
 
-  public getData(id: number) {
+  public getData(id: string) {
     return this.dataBase.get(id);
   }
 
-  public checkData(id: number) {
+  public checkData(id: string) {
     return this.dataBase.has(id);
   }
 
-  public deleteData(id: number) {
+  public deleteData(id: string) {
     this.dataBase.delete(id);
   }
 

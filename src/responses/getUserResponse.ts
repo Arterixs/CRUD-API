@@ -3,8 +3,8 @@ import { dataBase } from '../model/model.app.ts';
 import { StatusCode } from '../types/enum.ts';
 
 export const getUserResponse = (res: ServerResponse<IncomingMessage>, clientId: string) => {
-  if (dataBase.checkData(Number(clientId))) {
-    const obj = dataBase.getData(Number(clientId));
+  if (dataBase.checkData(clientId)) {
+    const obj = dataBase.getData(clientId);
     res.writeHead(StatusCode.SUCCES, {
       'Content-type': 'application/json',
     });
