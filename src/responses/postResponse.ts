@@ -16,8 +16,9 @@ export const postResponse = async (req: IncomingMessage, res: ServerResponse<Inc
       const { userId, updateUser } = setIdUserObject(userObject as User);
       dataBase.setData(updateUser, userId);
       MiddlewareResponse(res, StatusCode.CREATE, updateUser);
+    } else {
+      throw new CustomError(INVALID_DATA, StatusCode.BAD_REQUEST);
     }
-    throw new CustomError(INVALID_DATA, StatusCode.BAD_REQUEST);
   } catch (err) {
     catchController(err, res);
   }

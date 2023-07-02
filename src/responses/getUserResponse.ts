@@ -12,10 +12,12 @@ export const getUserResponse = (res: ServerResponse<IncomingMessage>, clientId: 
       if (dataBase.checkData(clientId)) {
         const user = dataBase.getData(clientId);
         MiddlewareResponse(res, StatusCode.SUCCES, user);
+      } else {
+        throw new CustomError(USER_NOT_EXIST, StatusCode.NOT_FOUND);
       }
-      throw new CustomError(USER_NOT_EXIST, StatusCode.NOT_FOUND);
+    } else {
+      throw new CustomError(USER_ID_NOT_VALID, StatusCode.BAD_REQUEST);
     }
-    throw new CustomError(USER_ID_NOT_VALID, StatusCode.BAD_REQUEST);
   } catch (err) {
     catchController(err, res);
   }

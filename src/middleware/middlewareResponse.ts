@@ -6,4 +6,5 @@ export const MiddlewareResponse = (res: ServerResponse<IncomingMessage>, code: S
     'Content-type': 'application/json',
   });
   res.end(JSON.stringify(message));
+  console.log(code, message);
 };
