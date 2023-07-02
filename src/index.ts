@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { createServer } from 'node:http';
-import { Method } from './types/enum.ts';
+import { Method, StatusCode } from './types/enum.ts';
 import { getResponse } from './responses/getResponse.ts';
 import { getUserResponse } from './responses/getUserResponse.ts';
 import { readBodyResponse } from './responses/readBodyResponse.ts';
@@ -9,8 +9,6 @@ import { deleteUserResponse } from './responses/deleteUserResponse.ts';
 import { postResponse } from './responses/postResponse.ts';
 
 const { PORT } = process.env;
-
-// =======================================================================
 
 const server = createServer((req, res) => {
   const clientUrl = req.url;
@@ -41,7 +39,12 @@ const server = createServer((req, res) => {
           getResponse(res);
           break;
         case Method.POST:
-          postResponse(req, res).catch((err) => console.log(err));
+          postResponse(req, res).catch(() => {
+            res.writeHead(StatusCode.SERVER_ERROR, {
+              'Content-type': 'application/json',
+            });
+            res.end(JSON.stringify({ message: 'Server error' }));
+          });
           break;
         default:
           break;

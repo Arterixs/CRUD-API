@@ -1,18 +1,27 @@
 import { ServerResponse, IncomingMessage } from 'node:http';
 import { dataBase } from '../model/model.app.ts';
 import { StatusCode } from '../types/enum.ts';
+import { isValidUserId } from '../helpers/isValidUserId.ts';
 
 export const getUserResponse = (res: ServerResponse<IncomingMessage>, clientId: string) => {
-  if (dataBase.checkData(clientId)) {
-    const obj = dataBase.getData(clientId);
-    res.writeHead(StatusCode.SUCCES, {
-      'Content-type': 'application/json',
-    });
-    res.end(JSON.stringify(obj));
+  const checkId = isValidUserId(clientId);
+  if (checkId) {
+    if (dataBase.checkData(clientId)) {
+      const obj = dataBase.getData(clientId);
+      res.writeHead(StatusCode.SUCCES, {
+        'Content-type': 'application/json',
+      });
+      res.end(JSON.stringify(obj));
+    } else {
+      res.writeHead(StatusCode.NOT_FOUND, {
+        'Content-type': 'application/json',
+      });
+      res.end(JSON.stringify({ message: 'User is not exsist' }));
+    }
   } else {
-    res.writeHead(StatusCode.NOT_FOUND, {
+    res.writeHead(StatusCode.BAD_REQUEST, {
       'Content-type': 'application/json',
     });
-    res.end(JSON.stringify({ message: 'User is not found' }));
+    res.end(JSON.stringify({ message: 'UserId is not valid' }));
   }
 };
